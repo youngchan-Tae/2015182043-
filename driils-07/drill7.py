@@ -67,3 +67,4 @@ while True:
     run_character()
 
 close_canvas()
+###?/
