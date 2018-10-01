@@ -53,7 +53,11 @@ def goal_current_to_point(point_count):
         if i == 100:
             break
 
-
+def run_character():
+    count = 0
+    while True:
+        goal_current_to_point(count)
+        count = (count + 1) % 10
 
 
 cx, cy = 800 // 2, 90
