@@ -132,7 +132,7 @@ class DashState:
         boy.frame = (boy.frame + 1) % 8
         boy.x += (boy.velocity * 4)
         boy.x = clamp(25, boy.x, 1600 - 25)
-        
+    
 
     def draw(boy):
         if boy.velocity >= 1:
@@ -143,10 +143,10 @@ class DashState:
 
 
 next_state_table = {
-    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER: SleepState, SPACE: IdleState},
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, SPACE: RunState},
+    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER: SleepState, SHIFT_DOWN: IdleState, SHIFT_UP: IdleState, SPACE: IdleState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, SHIFT_DOWN: DashState, SHIFT_UP: RunState, SPACE: RunState},
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState, LEFT_UP: RunState, RIGHT_UP: RunState, SPACE: IdleState},
-
+    DashState: {SHIFT_UP: RunState, SHIFT_DOWN: DashState, RIGHT_UP: IdleState, LEFT_UP: IdleState, RIGHT_DOWN: IdleState, LEFT_DOWN: IdleState, SPACE: DashState}
 }
 
 class Boy:
