@@ -132,7 +132,9 @@ class DashState:
         boy.frame = (boy.frame + 1) % 8
         boy.x += (boy.velocity * 4)
         boy.x = clamp(25, boy.x, 1600 - 25)
-    
+        boy.dashtimer -= 1
+        if boy.dashtimer == 0:
+            boy.add_event(SHIFT_UP)
 
     def draw(boy):
         if boy.velocity >= 1:
