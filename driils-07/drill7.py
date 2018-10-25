@@ -6,6 +6,7 @@ KPU_WIDTH, KPU_HEIGHT = 1280, 1024
 open_canvas(1280, 1024)
 
 kpu = load_image('KPU_GROUND.png')
+
 character = load_image('animation_sheet.png')
 
 
