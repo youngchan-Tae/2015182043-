@@ -64,7 +64,7 @@ class IdleState:
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         if get_time() - boy.timer >= 10:
             boy.add_event(SLEEP_TIMER)
-        
+
 
     @staticmethod
     def draw(boy):
@@ -216,3 +216,4 @@ class Boy:
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+#완성성
