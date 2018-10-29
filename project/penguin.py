@@ -1,23 +1,84 @@
 from pico2d import *
 
-# Penguin State
-IDLE, RUN = range(2)
+import  game_world
 
 # Penguin Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP = range(4)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE= range(5)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
-    (SDL_KEYUP, SDLK_LEFT): LEFT_UP
+    (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
+    (SDL_KEYDOWN, SDLK_SPACE): SPACE
 }
+
+#Pengguin States
+
+class IdleState:
+
+    @staticmethod
+    def enter(penguin, event):
+        if event == RIGHT_DOWN:
+            penguin.velocity += 1
+        elif event == LEFT_DOWN:
+            penguin.velocity -= 1
+        elif event == RIGHT_UP:
+            penguin.velocity -= 1
+        elif event == LEFT_UP:
+            penguin.velocity += 1
+
+    @staticmethod
+    def exit(penguin, event):
+        if event == SPACE:
+            pass
+
+    @staticmethod
+    def do(penguin):
+        penguin.frame = (penguin.frame + 1) % 7
+
+    @staticmethod
+    def draw(penguin):
+        penguin.image.clip_draw(penguin.frame * 100 + 50, 300, 100, 100, penguin.x, penguin.y)
+
+
+
+
+class RunState:
+
+    @staticmethod
+    def enter(penguin, event):
+        def enter(penguin, event):
+            if event == RIGHT_DOWN:
+                penguin.velocity += 1
+            elif event == LEFT_DOWN:
+                penguin.velocity -= 1
+            elif event == RIGHT_UP:
+                penguin.velocity -= 1
+            elif event == LEFT_UP:
+                penguin.velocity += 1
+            penguin.dir = penguin.velocity
+
+    @staticmethod
+    def exit(penguin, event):
+        if event == SPACE:
+            pass
+
+    @staticmethod
+    def do(penguin):
+        penguin.frame = (penguin.frame + 1) % 7
+        penguin.x = clamp(25, penguin.x, 1600 - 25)
+
+    @staticmethod
+    def draw(penguin):
+        penguin.image.clip_draw(penguin.frame * 100 + 50, 300, 100, 100, penguin.x, penguin.y)
+
+
 
 next_state_table = {
-    IDLE: {RIGHT_UP: RUN, LEFT_UP: RUN, RIGHT_DOWN: RUN, LEFT_DOWN: RUN},
-    RUN: {RIGHT_UP: IDLE, LEFT_UP: IDLE, LEFT_DOWN: IDLE, RIGHT_DOWN: IDLE}
+    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState}
 }
-
 
 
 class Penguin:
@@ -26,7 +87,7 @@ class Penguin:
         self.event_que = []
         self.x, self.y = 800 // 2, 90
         self.image = load_image('penguin_animation.png')
-        self.cur_state = IDLE
+        self.cur_state = IdleState
         self.dir = 1
         self.velocity = 0
         self.enter_state[IDLE](self)
@@ -70,12 +131,6 @@ class Penguin:
         self.exit_state[self.cur_state](self)
         self.enter_state[state](self)
         self.cur_state = state
-
-    enter_state = {IDLE: enter_IDLE, RUN: enter_RUN}
-    exit_state = {IDLE: exit_IDLE, RUN: exit_RUN}
-    do_state = {IDLE: do_IDLE, RUN: do_RUN}
-    draw_state = {IDLE: draw_IDLE, RUN: draw_RUN}
-
 
     def update(self):
         self.do_state[self.cur_state](self)
