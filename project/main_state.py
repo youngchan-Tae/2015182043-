@@ -5,7 +5,7 @@ import os
 from pico2d import *
 
 import game_framework
-import title_state
+import game_world
 
 from background import Background
 from penguin import Penguin
@@ -21,12 +21,12 @@ def enter():
     global penguin, background
     penguin = Penguin()
     background = Background()
+    game_world.add_object(background, 0)
+    game_world.add_object(penguin, 1)
 
 
 def exit():
-    global penguin, background
-    del penguin
-    del background
+    game_world.clear()
 
 
 
@@ -43,20 +43,19 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif(event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
-            game_framework.change_state(title_state)
         else:
             penguin.handle_event(event)
 
 
 
 def update():
-    penguin.update()
+    for game_object in game_world.all_objects():
+        game_object.update()
 
 def draw():
     clear_canvas()
-    background.draw()
-    penguin.draw()
+    for game_object in game_world.all_objects():
+        game_object.draw()
     update_canvas()
 
 
