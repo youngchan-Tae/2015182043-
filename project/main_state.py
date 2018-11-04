@@ -8,8 +8,6 @@ import game_framework
 import game_world
 
 from background import Background0
-from background import Background1
-from background import Background2
 from penguin import Penguin
 
 name = "MainState"

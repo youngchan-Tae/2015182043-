@@ -55,7 +55,7 @@ class IdleState:
 
     @staticmethod
     def draw(penguin):
-        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 300, 100, 100, penguin.x, penguin.y)
+        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 320, 100, 100, penguin.x, penguin.y)
 
 
 
@@ -86,7 +86,7 @@ class RunState:
 
     @staticmethod
     def draw(penguin):
-        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 300, 100, 100, penguin.x, penguin.y)
+        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 320, 100, 100, penguin.x, penguin.y)
 
 class JumpState:
     def enter(penguin, event):
@@ -101,7 +101,7 @@ class JumpState:
             penguin.add_event(JUMP_TIMER)
 
     def draw(penguin):
-        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 100, 100, 100, penguin.x, penguin.y)
+        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 125, 100, 100, penguin.x, penguin.y)
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SPACE_DOWN: JumpState, SPACE_UP: IdleState},
