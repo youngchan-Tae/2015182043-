@@ -7,7 +7,9 @@ from pico2d import *
 import game_framework
 import game_world
 
-from background import Background
+from background import Background0
+from background import Background1
+from background import Background2
 from penguin import Penguin
 
 name = "MainState"
@@ -20,7 +22,7 @@ font = None
 def enter():
     global penguin, background
     penguin = Penguin()
-    background = Background()
+    background = Background0()
     game_world.add_object(background, 0)
     game_world.add_object(penguin, 1)
 
