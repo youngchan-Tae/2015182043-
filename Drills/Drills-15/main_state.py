@@ -15,6 +15,7 @@ name = "MainState"
 boy = None
 background = None
 balls = []
+ball_conut = 0
 
 def collide(a, b):
     # fill here
@@ -70,6 +71,8 @@ def handle_events():
 
 
 def update():
+    global ball_conut
+
     for game_object in game_world.all_objects():
         game_object.update()
     for ball in balls:
@@ -77,7 +80,7 @@ def update():
             balls.remove(ball)
             boy.eat(ball)
             game_world.remove_object(ball)
-
+            ball_conut = ball_conut + 1
 
 def draw():
     clear_canvas()

@@ -29,3 +29,5 @@ class Ball:
         self.x = self.bg.w / 2
         self.y = self.bg.h / 2
 
+        #수정완료료
+
