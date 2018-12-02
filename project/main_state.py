@@ -4,6 +4,7 @@ import os
 
 from pico2d import *
 
+import end_state
 import game_framework
 import game_world
 import penguin
@@ -30,7 +31,7 @@ global penguin_collide_dir
 penguin_collide_dir = 0
 collide_timer = 0
 collide_judge = 0
-
+item_eat = False
 
 def enter():
     global penguin, background, obstacle, item
@@ -78,6 +79,7 @@ def update():
     global collide_timer
     global collide_judge
     global penguin_collide_dir
+    global item_eat
 
     if (penguin.distance % 100 > 99.6):
         item = Item()
@@ -95,7 +97,7 @@ def update():
         if collide(penguin, obstacle):
             collide_state = 0 # 현재 충돌상태(시간정지)
             collide_judge = 1 # 충돌 면역 켜짐
-            print(collide_timer)
+            item_eat = False
             if (obstacle.x < penguin.x):
                penguin.x += 90
                penguin_collide_dir = 1
@@ -110,11 +112,14 @@ def update():
     elif collide_judge == 1:
         collide_state = 0
 
-    if penguin.jump_collide == False:
+    if penguin.jump_collide == True:
         if collide(penguin, item):
             game_world.remove_object(item)
-            print("col")
+            item_eat = True
+    print(penguin.distance)
 
+    if penguin.distance >= 20000:
+        game_framework.change_state(end_state)
 
 def draw():
     clear_canvas()

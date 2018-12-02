@@ -73,7 +73,10 @@ class RunState:
             else:
                 penguin.image.clip_draw(550, 125, 100, 100, penguin.x + int(penguin.collide_frame) * 30 - 90, penguin.y)
         else:
-            penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 320, 100, 100, penguin.x, penguin.y)
+            if main_state.item_eat == True:
+                penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 225, 100, 90, penguin.x, penguin.y)
+            else:
+                penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 320, 100, 100, penguin.x, penguin.y)
 
 
 class JumpState:
@@ -94,7 +97,10 @@ class JumpState:
 
     @staticmethod
     def draw(penguin):
-        penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 125, 100, 100, penguin.x, penguin.y)
+        if main_state.item_eat == True:
+            penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 25, 100, 100, penguin.x, penguin.y)
+        else:
+            penguin.image.clip_draw(int(penguin.frame) * 100 + 50, 125, 100, 100, penguin.x, penguin.y)
 
 next_state_table = {
     RunState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
